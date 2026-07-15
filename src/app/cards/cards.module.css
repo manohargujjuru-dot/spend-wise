@@ -1,0 +1,266 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.75px;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.btnAddCard {
+  padding: 0.65rem 1.2rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  color: white;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+  transition: all 0.2s ease;
+}
+
+.btnAddCard:hover {
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+  transform: translateY(-1px);
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 750;
+  color: var(--text-primary);
+}
+
+.cardCount {
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Physical Card designs */
+.creditCardWrapper {
+  position: relative;
+  height: 215px;
+  border-radius: 16px;
+  padding: 1.5rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.15), 0 1px 3px rgba(0,0,0,0.05);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.debitBg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0d9488 100%);
+}
+
+.creditBg {
+  background: linear-gradient(135deg, #0f172a 0%, #6b7280 50%, #b45309 100%);
+}
+
+.cardGlow {
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.bankName {
+  font-family: var(--font-display);
+  font-weight: 850;
+  font-size: 1.1rem;
+  letter-spacing: -0.25px;
+  text-transform: uppercase;
+}
+
+.cardName {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  display: block;
+  margin-top: 0.1rem;
+}
+
+.networkLogo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  font-style: italic;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+}
+
+.chipSection {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 2;
+  margin-top: 0.5rem;
+}
+
+.chip {
+  width: 38px;
+  height: 28px;
+  background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+  border-radius: 6px;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.4);
+}
+
+.chip::before {
+  content: '';
+  position: absolute;
+  top: 4px; left: 4px; right: 4px; bottom: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.numberSection {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 750;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  margin: 1rem 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 0.5px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.footerLabel {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.footerVal {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  display: block;
+}
+
+.btnDeleteCard {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.creditCardWrapper:hover .btnDeleteCard {
+  opacity: 1;
+}
+
+.btnDeleteCard:hover {
+  background: #e11d48;
+  border-color: #e11d48;
+}
+
+.emptyState {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px dashed rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 576px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .btnAddCard {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem 1.2rem; /* larger mobile touch target */
+  }
+  
+  .grid {
+    grid-template-columns: 1fr; /* single column stacks */
+  }
+}

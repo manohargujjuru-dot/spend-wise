@@ -1,26 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f1f5f9;
+  --foreground: #0f172a;
+  
+  /* macOS Glassmorphic Mirror variables */
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(0, 0, 0, 0.05);
+  --card-blur: 24px;
+  
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-glow: rgba(79, 70, 229, 0.15);
+  
+  --success: #059669;
+  --success-bg: rgba(5, 150, 105, 0.06);
+  --success-glow: rgba(5, 150, 105, 0.15);
+  
+  --danger: #e11d48;
+  --danger-bg: rgba(225, 29, 72, 0.06);
+  --danger-glow: rgba(225, 29, 72, 0.15);
+  
+  --info: #0284c7;
+  --info-bg: rgba(2, 132, 199, 0.06);
+  
+  --warning: #d97706;
+  --warning-bg: rgba(217, 119, 6, 0.06);
+  --warning-glow: rgba(217, 119, 6, 0.15);
+  
+  --accent: #7c3aed;
+  --accent-glow: rgba(124, 58, 237, 0.15);
+  
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --border: rgba(0, 0, 0, 0.06);
+  
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --sidebar-width: 260px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  
+  /* Richer, slightly darker macOS style Aurora wallpaper */
+  background: 
+    radial-gradient(at 0% 0%, #c7d2fe 0px, transparent 50%), /* saturated indigo */
+    radial-gradient(at 100% 0%, #f0abfc 0px, transparent 45%), /* saturated pink */
+    radial-gradient(at 100% 100%, #fed7aa 0px, transparent 50%), /* saturated orange */
+    radial-gradient(at 0% 100%, #a5f3fc 0px, transparent 50%), /* saturated cyan */
+    #e2e8f0; /* darker base gray */
+  background-attachment: fixed;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* macOS Frosted Mirror Panel */
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--card-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--card-blur)) saturate(180%);
+  border: 1px solid var(--card-border);
+  border-radius: 16px; /* classic iOS/macOS rounded corner */
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.02), 
+    0 1px 3px rgba(0, 0, 0, 0.01),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7);
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass:hover {
+  /* No hover translations or shadow changes */
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-success {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-danger {
+  background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Layout classes */
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-left: var(--sidebar-width);
+  padding: 2.5rem;
+  min-height: 100vh;
+  min-width: 0;
+  max-width: calc(100vw - var(--sidebar-width));
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 1.5rem 1.5rem 5.5rem 1.5rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes softPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+.cyber-pulse {
+  animation: softPulse 2.5s infinite ease-in-out;
+}
+
+/* Mobile inputs zoom prevention */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Hide Next.js dev overlay indicator bubble on mobile and desktop dev views */
+nextjs-portal {
+  display: none !important;
+}
+
+/* Mobile Top Header Bar styles */
+.mobile-header {
+  display: none;
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 0 1.25rem;
+    z-index: 900;
+  }
+
+  .hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+
+  .hamburger-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-logo {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 5rem 1.25rem 2.5rem 1.25rem !important; /* space below topbar */
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 }

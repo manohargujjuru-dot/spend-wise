@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id                    String                 @id @default(uuid())
+  fullName              String
+  email                 String                 @unique
+  mobile                String?
+  password              String
+  profilePhoto          String?
+  currency              String                 @default("USD")
+  timeZone              String                 @default("UTC")
+  language              String                 @default("en")
+  theme                 String                 @default("dark")
+  accounts              Account[]
+  transactions          Transaction[]
+  budgets               Budget[]
+  goals                 Goal[]
+  notifications         Notification[]
+  recurringTransactions RecurringTransaction[]
+  cards                 Card[]
+}
+
+model Account {
+  id                    String                 @id @default(uuid())
+  name                  String
+  type                  String                 // "CASH", "BANK", "CREDIT_CARD", "DEBIT_CARD", "WALLET", "UPI", "INVESTMENT"
+  openingBalance        Float                  @default(0)
+  currentBalance        Float                  @default(0)
+  status                String                 @default("ACTIVE")
+  userId                String
+  user                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions          Transaction[]
+  recurringTransactions RecurringTransaction[]
+}
+
+model Category {
+  id                    String                 @id
+  name                  String
+  type                  String                 // "INCOME", "EXPENSE", or "BOTH"
+  color                 String                 // CSS color variable or hex code
+  icon                  String                 // Lucide icon name
+  transactions          Transaction[]
+  budgets               Budget[]
+  recurringTransactions RecurringTransaction[]
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  amount        Float
+  type          String   // "INCOME" or "EXPENSE"
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  accountId     String
+  account       Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  paymentMethod String?  // "CASH", "CARD", "UPI", "NET_BANKING", etc.
+  merchant      String?  // Merchant / Payee
+  description   String?
+  location      String?
+  attachmentPath String?
+  tags          String?  // Comma-separated strings
+  isRecurring   Boolean  @default(false)
+  date          DateTime @default(now())
+  status        String   @default("COMPLETED") // "COMPLETED", "PENDING", "FAILED"
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Budget {
+  id          String   @id @default(uuid())
+  name        String
+  amount      Float
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  startDate   DateTime
+  endDate     DateTime
+  alertLimit  Float    @default(85) // Alert threshold percentage (e.g. 85%)
+  status      String   @default("ACTIVE") // "ACTIVE", "EXPIRED"
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, categoryId, startDate, endDate])
+}
+
+model Goal {
+  id            String   @id @default(uuid())
+  name          String   // "Buy Bike", "Emergency Fund", "Vacation", "New Laptop"
+  targetAmount  Float
+  currentAmount Float    @default(0)
+  deadline      DateTime
+  status        String   @default("IN_PROGRESS") // "IN_PROGRESS", "ACHIEVED", "FAILED"
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  type      String   // "BUDGET_EXCEEDED", "BILL_REMINDER", "GOAL_MILESTONE"
+  message   String
+  isRead    Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model RecurringTransaction {
+  id          String   @id @default(uuid())
+  amount      Float
+  type        String   // "INCOME" or "EXPENSE"
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  accountId   String
+  account     Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  description String?
+  frequency   String   // "DAILY", "WEEKLY", "MONTHLY", "YEARLY"
+  startDate   DateTime @default(now())
+  nextRunDate DateTime
+  isActive    Boolean  @default(true)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Card {
+  id         String   @id @default(uuid())
+  name       String   // e.g. "Salary Card"
+  number     String   // masked or full card number e.g. "4111 2222 3333 4444"
+  holderName String
+  expiry     String   // e.g. "12/29"
+  type       String   // "DEBIT" or "CREDIT"
+  network    String   // "VISA", "MASTERCARD", "RUPAY", "AMEX"
+  bankName   String   // e.g. "HDFC Bank"
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
