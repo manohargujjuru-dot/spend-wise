@@ -148,6 +148,19 @@ export default function RegisterPage() {
             Sign In
           </Link>
         </p>
+
+        <div 
+          style={{ 
+            textAlign: 'center', 
+            fontSize: '0.72rem', 
+            color: 'var(--text-muted)', 
+            opacity: 0.65,
+            marginTop: '2rem',
+            letterSpacing: '0.2px'
+          }}
+        >
+          Designed by ManoharGujjuru
+        </div>
       </div>
     </div>
   );

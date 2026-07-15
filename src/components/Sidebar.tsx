@@ -189,6 +189,18 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <LogOut size={14} />
             Logout
           </button>
+          <div 
+            style={{ 
+              textAlign: 'center', 
+              fontSize: '0.68rem', 
+              color: 'var(--text-muted)', 
+              opacity: 0.65,
+              marginTop: '0.5rem',
+              letterSpacing: '0.2px'
+            }}
+          >
+            Designed by ManoharGujjuru
+          </div>
         </div>
       )}
     </aside>
