@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     let totalExpenses = 0;
     const categorySpends: Record<string, { name: string; amount: number }> = {};
 
-    transactions.forEach((tx) => {
+    transactions.forEach((tx: any) => {
       if (tx.type === 'INCOME') {
         totalIncome += tx.amount;
       } else {
@@ -63,16 +63,16 @@ export async function GET(request: NextRequest) {
     let budgetPoints = 30;
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
-    const currentMonthExpenses = transactions.filter((tx) => {
+    const currentMonthExpenses = transactions.filter((tx: any) => {
       const d = new Date(tx.date);
       return tx.type === 'EXPENSE' && d.getMonth() + 1 === currentMonth && d.getFullYear() === currentYear;
     });
 
     const alerts: string[] = [];
-    budgets.forEach((b) => {
+    budgets.forEach((b: any) => {
       const spent = currentMonthExpenses
-        .filter((tx) => tx.categoryId === b.categoryId)
-        .reduce((sum, tx) => sum + tx.amount, 0);
+        .filter((tx: any) => tx.categoryId === b.categoryId)
+        .reduce((sum, tx: any) => sum + tx.amount, 0);
 
       if (spent >= b.amount) {
         budgetPoints -= 10;
