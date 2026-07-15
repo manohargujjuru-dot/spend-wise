@@ -199,7 +199,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               letterSpacing: '0.2px'
             }}
           >
-            Designed by ManoharGujjuru
+            Designed by @ManoharGujjuru
           </div>
         </div>
       )}

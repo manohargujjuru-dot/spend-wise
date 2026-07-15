@@ -132,7 +132,7 @@ export default function LoginPage() {
             letterSpacing: '0.2px'
           }}
         >
-          Designed by ManoharGujjuru
+          Designed by @ManoharGujjuru
         </div>
       </div>
     </div>
