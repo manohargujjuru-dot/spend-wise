@@ -13,11 +13,9 @@ export async function getCurrentUser() {
       if (user) return user;
     }
     
-    // Fallback to the first seeded user (John Doe) for seamless testing
-    const firstUser = await db.user.findFirst();
-    return firstUser;
+    return null;
   } catch (error) {
     console.error('Error getting current user:', error);
-    return await db.user.findFirst();
+    return null;
   }
 }
