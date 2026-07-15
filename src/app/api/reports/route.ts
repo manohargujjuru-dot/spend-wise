@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     const categoryTotals: Record<string, { name: string; amount: number; color: string }> = {};
     const accountTotals: Record<string, { name: string; amount: number; type: string }> = {};
 
-    transactions.forEach((tx) => {
+    transactions.forEach((tx: any) => {
       if (tx.type === 'INCOME') {
         totalIncome += tx.amount;
       } else {

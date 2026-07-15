@@ -90,13 +90,13 @@ export async function GET(request: NextRequest) {
     const lastMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
 
     const lastMonthExpensesTotal = transactions
-      .filter((tx) => {
+      .filter((tx: any) => {
         const d = new Date(tx.date);
         return tx.type === 'EXPENSE' && d.getMonth() + 1 === lastMonth && d.getFullYear() === lastMonthYear;
       })
-      .reduce((sum, tx) => sum + tx.amount, 0);
+      .reduce((sum, tx: any) => sum + tx.amount, 0);
 
-    const currentMonthExpensesTotal = currentMonthExpenses.reduce((sum, tx) => sum + tx.amount, 0);
+    const currentMonthExpensesTotal = currentMonthExpenses.reduce((sum, tx: any) => sum + tx.amount, 0);
 
     if (lastMonthExpensesTotal > 0) {
       const pctIncrease = ((currentMonthExpensesTotal - lastMonthExpensesTotal) / lastMonthExpensesTotal) * 100;

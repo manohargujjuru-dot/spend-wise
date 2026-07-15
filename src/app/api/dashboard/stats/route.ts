@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(now.getDate() - 7);
 
-    allTransactions.forEach((tx) => {
+    allTransactions.forEach((tx: any) => {
       const txDate = new Date(tx.date);
       if (tx.type === 'INCOME') {
         totalIncome += tx.amount;
@@ -68,14 +68,14 @@ export async function GET(request: NextRequest) {
     const savingsRate = totalIncome > 0 ? (netBalance / totalIncome) * 100 : 0;
 
     // 2. Category distribution for current month (expenses only)
-    const currentMonthTransactions = allTransactions.filter((tx) => {
+    const currentMonthTransactions = allTransactions.filter((tx: any) => {
       const txDate = new Date(tx.date);
       return txDate.getMonth() + 1 === currentMonth && txDate.getFullYear() === currentYear;
     });
 
     const categoryTotals: Record<string, { id: string; name: string; amount: number; color: string; icon: string }> = {};
 
-    currentMonthTransactions.forEach((tx) => {
+    currentMonthTransactions.forEach((tx: any) => {
       if (tx.type === 'EXPENSE') {
         if (!categoryTotals[tx.categoryId]) {
           categoryTotals[tx.categoryId] = {
@@ -107,11 +107,11 @@ export async function GET(request: NextRequest) {
     let totalBudgetLimit = 0;
     let totalBudgetSpent = 0;
 
-    const budgetProgress = budgets.map((b) => {
+    const budgetProgress = budgets.map((b: any) => {
       totalBudgetLimit += b.amount;
       const spent = currentMonthTransactions
-        .filter((tx) => tx.type === 'EXPENSE' && tx.categoryId === b.categoryId)
-        .reduce((sum, tx) => sum + tx.amount, 0);
+        .filter((tx: any) => tx.type === 'EXPENSE' && tx.categoryId === b.categoryId)
+        .reduce((sum, tx: any) => sum + tx.amount, 0);
       
       totalBudgetSpent += spent;
 
@@ -148,7 +148,7 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    allTransactions.forEach((tx) => {
+    allTransactions.forEach((tx: any) => {
       const txDate = new Date(tx.date);
       const mLabel = txDate.toLocaleString('default', { month: 'short' });
       const yearLabel = txDate.getFullYear();
